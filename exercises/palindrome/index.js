@@ -13,13 +13,17 @@ function palindrome(str) {
     // }
     // return true;
 
+    // Simplest way using JS array functions
+    let revStr = str.split('').reverse().join('');
+    return revStr === str;
+
     // Completely absurd alternative solution. Reverse the second half of the string and compares it to the first half.
     // floor/ceiling of the middle index necessary to handle palindromes with an odd number of characters. Note that the end index of the slice method is non-inclusive.
-    let strArr = str.split('');
-    let midIdx = strArr.length / 2;
-    let firstHalf = strArr.slice(0, Math.ceil(midIdx)).join('');
-    let revSecondHalf = strArr.slice(Math.floor(midIdx), strArr.length).reverse().join('')
-    return firstHalf === revSecondHalf;
+    // let strArr = str.split('');
+    // let midIdx = strArr.length / 2;
+    // let firstHalf = strArr.slice(0, Math.ceil(midIdx)).join('');
+    // let revSecondHalf = strArr.slice(Math.floor(midIdx), strArr.length).reverse().join('')
+    // return firstHalf === revSecondHalf;
 }
 
 module.exports = palindrome;
