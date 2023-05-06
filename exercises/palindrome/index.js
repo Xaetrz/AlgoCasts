@@ -14,8 +14,11 @@ function palindrome(str) {
     // return true;
 
     // Simplest way using JS array functions
-    let revStr = str.split('').reverse().join('');
-    return revStr === str;
+    // let revStr = str.split('').reverse().join('');
+    // return revStr === str;
+
+    // Use the every array helper function instead. Since it loops through the whole string, half of the checks are redundant
+    return str.split('').every( (char, idx, arr) => char === arr[arr.length - idx - 1] );
 
     // Completely absurd alternative solution. Reverse the second half of the string and compares it to the first half.
     // floor/ceiling of the middle index necessary to handle palindromes with an odd number of characters. Note that the end index of the slice method is non-inclusive.
