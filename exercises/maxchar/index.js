@@ -9,8 +9,9 @@ function maxChar(str) {
     let countMap = {};
     let maxChar = str[0];
     for (let c of str) {
-        if (countMap[c] === undefined) countMap[c] = 0;
-        else countMap[c]++;
+        //if (countMap[c] === undefined) countMap[c] = 1;
+        //else countMap[c]++;
+        countMap[c] = countMap[c] + 1 || 1; // Cleaner alternative to above
         if (countMap[maxChar] < countMap[c]) maxChar = c;
     }
     return maxChar;
