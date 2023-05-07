@@ -25,9 +25,15 @@ function chunk(array, size) {
     // return chunkedArr;
 
     // Cleaner solution using JS helper slice. Slice automatically handles case where final chunk is smaller than size, simply copies remaining elements.
-    let numChunks = Math.ceil(array.length / size);
-    for (let chunk = 0; chunk < numChunks; chunk++) {
-        chunkedArr[chunk] = array.slice(chunk * size, (chunk * size) + size);
+    // let numChunks = Math.ceil(array.length / size);
+    // for (let chunk = 0; chunk < numChunks; chunk++) {
+    //     chunkedArr[chunk] = array.slice(chunk * size, (chunk * size) + size);
+    // }
+    // return chunkedArr;
+
+    // Even cleaner variation of the above solution. Instead of iterating over chunks, iterate over starting chunk locations of original array 
+    for (let i = 0; i < array.length; i += size) {
+        chunkedArr.push(array.slice(i, i + size));
     }
     return chunkedArr;
 
