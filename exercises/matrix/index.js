@@ -15,6 +15,92 @@
 //     [11, 16, 15, 6],
 //     [10,  9,  8, 7]]
 
-function matrix(n) {}
+function matrix(n) {
+    // Initialize a multi-dimensional array the standard way with nested loops
+    // let mat = [];
+    // for (let i = 0; i < n; i++) {
+    //     mat[i] = [];
+    //     for (let j = 0; j < n; j++) {
+    //         mat[i][j] = 0;
+    //     }
+    // }
 
+    // Initialize a multi-dimensional array the javascript way
+    let mat = Array(n).fill(0).map(x => Array(n).fill(0));
+
+    // Alternative solution that cycles between directions in a clockwise pattern
+    // let row = 0, col = 0, nextDir = 'E'; // Need to prioritize going a specific direction until we bump into either the end of the matrix or to an index we already assigned to
+    // for (let iterator = 1; iterator <= n * n; iterator++) {
+    //     mat[row][col] = iterator;
+
+    //     if (nextDir === 'E' && col + 1 < n && !mat[row][col + 1]) {
+    //         col++;
+    //         continue;
+    //     }
+    //     else if (nextDir === 'E') {
+    //         nextDir = 'S';
+    //     }
+
+    //     if (nextDir === 'S' && row + 1 < n && !mat[row + 1][col]) {
+    //         row++;
+    //         continue;
+    //     }
+    //     else if (nextDir === 'S') {
+    //         nextDir = 'W';
+    //     }
+
+    //     if (nextDir === 'W' && col - 1 >= 0 && !mat[row][col - 1]) {
+    //         col--;
+    //         continue;
+    //     }
+    //     else if (nextDir === 'W') {
+    //         nextDir = 'N';
+    //     }
+        
+    //     if (nextDir === 'N' && row - 1 >= 0 && !mat[row - 1][col] ) {
+    //         row--;
+    //         continue;
+    //     }
+    //     else if (nextDir === 'N') {
+    //         nextDir = 'E';
+    //         col++;  // Very important to move E here since we're assigning the iterator on each iteration of the loop
+    //     }
+    // }
+
+    // Solution that works through the matrix in layers, starting with the outmost layer
+    let startCol = 0, startRow = 0;
+    let endCol = n - 1, endRow = n - 1;
+    let curNum = 1;
+    while (curNum <= n * n) {
+        // Top side
+        for (let curCol = startCol; curCol <= endCol; curCol++) {
+            mat[startRow][curCol] = curNum;
+            curNum++;
+        }
+
+        // Right side
+        for (let curRow = startRow + 1; curRow <= endRow; curRow++) {
+            mat[curRow][endCol] = curNum;
+            curNum++;
+        }
+        // Bottom side
+        for (let curCol = endCol - 1; curCol >= startCol; curCol--) {
+            mat[endRow][curCol] = curNum;
+            curNum++;
+        }
+
+        // Left side
+        for (let curRow = endRow - 1; curRow >= startRow + 1; curRow--) {
+            mat[curRow][startCol] = curNum;
+            curNum++;
+        }
+
+        // Shift a layer deeper
+        startCol++, startRow++;
+        endCol--, endRow--;
+    }
+
+    return mat;
+}
+console.table(matrix(5));
 module.exports = matrix;
