@@ -8,6 +8,31 @@
 //     q.add(1);
 //     q.remove(); // returns 1;
 
-class Queue {}
+class Queue {
+    queue = [];
+    start = 0;
+    end = 0;
+    maxLength = 2;
+
+    add(e) {
+        this.queue.push(e);
+        this.end++;
+        // To (help) avoid a large memory leak at the start of the array, will recreate the array with all the elements shifted back to the start
+        if (this.end > this.maxLength) {
+            let newArr = this.queue.slice(this.start, this.end);
+            this.end = this.end - this.start;
+            this.start = 0;
+            this.queue = newArr;
+            this.maxLength *= 2; // Will double the maxLength each time this is done to prevent resizing too often
+        }
+    }
+
+    remove() {
+        let e = this.queue[this.start];
+        delete this.queue[this.start];
+        this.start++;
+        return e;
+    }
+}
 
 module.exports = Queue;
