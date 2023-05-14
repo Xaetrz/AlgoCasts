@@ -9,10 +9,12 @@
 //     q.remove(); // returns 1;
 
 class Queue {
-    queue = [];
-    start = 0;
-    end = 0;
-    maxLength = 2;
+    constructor() {
+        this.queue = [];
+        this.start = 0;
+        this.end = 0;
+        this.maxLength = 20;
+    }
 
     add(e) {
         this.queue.push(e);
@@ -24,10 +26,12 @@ class Queue {
             this.start = 0;
             this.queue = newArr;
             this.maxLength *= 2; // Will double the maxLength each time this is done to prevent resizing too often
+            //this.maxLength = (this.queue.Length < 50) ? 100: this.queue.Length * 2; // Another option: Increase maxLength as needed to prevent resizing too often
         }
     }
 
     remove() {
+        //return this.queue.shift(); // Lazy way, O(N) runtime since it shifts all elements.
         let e = this.queue[this.start];
         delete this.queue[this.start];
         this.start++;
