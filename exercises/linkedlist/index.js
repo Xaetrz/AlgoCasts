@@ -69,7 +69,7 @@ class LinkedList {
     insertLast(e) {
         let newNode = new Node(e);
         
-        // Handled manually
+        // Handled manually without code reuse
         // if (!this.head) {
         //     this.head = newNode;
         //     return;
@@ -111,13 +111,57 @@ class LinkedList {
             return;
         }
 
-        let prevNode = this.getAt(i-1);
+        let prevNode = this.getAt(i - 1);
         if (!prevNode || !prevNode.next) return; // Index doesn't exist, so nothing to do
         prevNode.next = prevNode.next.next;
     }
 
     insertAt(e, i) {
-        
+        if (!this.head || i === 0) {
+            this.head = new Node(e, this.head);
+            return;
+        }
+
+        // Handled manually without code reuse (more efficient since there's only one pass through the linked list)
+        // let counter = 1; // Already handled case where i = 0, so start at 1
+        // let curNode = this.head.next;
+        // let prevNode = this.head;
+        // while (curNode && counter < i) {
+        //     prevNode = curNode;
+        //     curNode = curNode.next;
+        //     counter++;
+        // }
+        // prevNode.next = new Node(e, curNode);
+
+        // Another solution with code reuse. Using getAt and insertLast does two passes of the linked list, so not optimal
+        // let prevNode = this.getAt(i - 1); // O(n)
+        // if (!prevNode) {
+        //     this.insertLast(e); // O(n)
+        //     return;
+        // }
+        // prevNode.next = new Node(e, prevNode.next);
+
+        // Similar but cleaner version from course of above solution
+        let prevNode = this.getAt(i - 1) || this.getLast();
+        prevNode.next = new Node(e, prevNode.next);
+    }
+
+    forEach(fn) {
+        let curNode = this.head;
+        let index = 0;
+        while (curNode) {
+            fn(curNode, index);
+            index++;
+            curNode = curNode.next;
+        }
+    }
+
+    *[Symbol.iterator]() {
+        let curNode = this.head;
+        while (curNode) {
+            yield curNode;
+            curNode = curNode.next;
+        }
     }
 }
 

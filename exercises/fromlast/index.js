@@ -11,6 +11,22 @@
 //    list.insertLast('d');
 //    fromLast(list, 2).data // 'b'
 
-function fromLast(list, n) {}
+function fromLast(list, n) {
+    let curNode = list.getFirst();
+    let lead = list.getFirst();
+
+    // Move lead n spaces forward
+    for (let i = 0; i < n; i++) {
+        lead = lead.next;
+    }
+
+    // Use lead to detect the end of the list while being n spaces in front of curNode
+    while (lead && lead.next) {
+        curNode = curNode.next;
+        lead = lead.next;
+    }
+
+    return curNode;
+}
 
 module.exports = fromLast;
